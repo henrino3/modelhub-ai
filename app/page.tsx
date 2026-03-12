@@ -1,65 +1,129 @@
-import Image from "next/image";
+import Link from "next/link";
+import { PricingCard } from "@/components/PricingCard";
+import { MODELS } from "@/lib/models";
 
-export default function Home() {
+const plans = [
+  {
+    name: "Free",
+    price: "$0",
+    description: "For testing prompts before you commit to another AI subscription.",
+    features: ["10 messages per day", "GLM-5 access", "Saved local chat history"],
+    cta: "Start free",
+    href: "/chat",
+  },
+  {
+    name: "Pro",
+    price: "$15/mo",
+    description: "The default plan for founders, operators, and indie hackers.",
+    features: ["500 messages per month", "Compare mode", "Priority model routing"],
+    cta: "Choose Pro",
+    href: "https://buy.stripe.com/test_00g7sE3h0000000000",
+    highlighted: true,
+  },
+  {
+    name: "Power",
+    price: "$39/mo",
+    description: "Unlimited usage for teams that live inside AI all day.",
+    features: ["Unlimited messages", "Fastest routing", "Early-access models"],
+    cta: "Choose Power",
+    href: "https://buy.stripe.com/test_3cs4gq2cW000000000",
+  },
+];
+
+export default function HomePage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="mx-auto max-w-7xl px-6 py-10 md:px-10 lg:px-12">
+      <header className="flex flex-col gap-6 rounded-[2rem] border border-white/10 bg-white/5 p-6 backdrop-blur md:p-10">
+        <nav className="flex flex-wrap items-center justify-between gap-4">
+          <Link href="/" className="text-lg font-semibold tracking-wide text-white">
+            ModelHub AI
+          </Link>
+          <div className="flex flex-wrap items-center gap-3 text-sm text-slate-300">
+            <Link href="/chat">Chat</Link>
+            <Link href="/compare">Compare</Link>
+            <Link href="/pricing">Pricing</Link>
+            <Link href="/blog">Blog</Link>
+          </div>
+        </nav>
+
+        <div className="grid gap-10 lg:grid-cols-[1.25fr_0.85fr] lg:items-center">
+          <div>
+            <div className="inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm text-cyan-200">
+              One workspace for the best LLMs
+            </div>
+            <h1 className="mt-6 max-w-4xl text-5xl font-semibold leading-tight text-white md:text-7xl">
+              Stop paying for five AI apps just to find the one good answer.
+            </h1>
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
+              ModelHub AI lets you chat with top models in one clean interface, switch mid-thread, and compare answers side by side before you ship.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <Link
+                href="/chat"
+                className="rounded-2xl bg-white px-6 py-3 font-medium text-slate-950 transition hover:opacity-90"
+              >
+                Launch chat
+              </Link>
+              <Link
+                href="/compare"
+                className="rounded-2xl border border-white/10 px-6 py-3 font-medium text-slate-100 transition hover:border-cyan-400"
+              >
+                Compare models
+              </Link>
+            </div>
+          </div>
+
+          <div className="rounded-[2rem] border border-white/10 bg-slate-950/70 p-6 shadow-2xl">
+            <p className="text-sm uppercase tracking-[0.3em] text-cyan-300">Live models</p>
+            <div className="mt-6 space-y-4">
+              {MODELS.map((model) => (
+                <div key={model.id} className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <h3 className="text-lg font-semibold text-white">{model.name}</h3>
+                      <p className="text-sm text-slate-400">{model.vendor}</p>
+                    </div>
+                    <span className="rounded-full border border-white/10 px-3 py-1 text-xs text-slate-200">
+                      {model.badge}
+                    </span>
+                  </div>
+                  <p className="mt-3 text-sm leading-6 text-slate-300">{model.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </header>
+
+      <section className="mt-10 grid gap-6 md:grid-cols-3">
+        {[
+          ["Switch models instantly", "Move from GLM-5 to MiniMax mid-conversation without losing context."],
+          ["Compare before deciding", "Run the same prompt across two models and spot the strongest answer fast."],
+          ["Save your chat history", "MVP uses localStorage so your past prompts stay close while you iterate."],
+        ].map(([title, body]) => (
+          <div key={title} className="rounded-[2rem] border border-white/10 bg-white/5 p-6">
+            <h2 className="text-xl font-semibold text-white">{title}</h2>
+            <p className="mt-3 text-sm leading-7 text-slate-300">{body}</p>
+          </div>
+        ))}
+      </section>
+
+      <section className="mt-16">
+        <div className="mb-8 flex items-end justify-between gap-4">
+          <div>
+            <p className="text-sm uppercase tracking-[0.3em] text-cyan-300">Pricing</p>
+            <h2 className="mt-3 text-3xl font-semibold text-white md:text-4xl">Simple plans for real usage</h2>
+          </div>
+          <Link href="/pricing" className="text-sm text-slate-300 hover:text-white">
+            View pricing page →
+          </Link>
         </div>
-      </main>
-    </div>
+        <div className="grid gap-6 lg:grid-cols-3">
+          {plans.map((plan) => (
+            <PricingCard key={plan.name} {...plan} />
+          ))}
+        </div>
+      </section>
+    </main>
   );
 }
