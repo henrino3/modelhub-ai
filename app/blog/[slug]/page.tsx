@@ -41,6 +41,8 @@ export default async function BlogPostPage({
           {paragraphs.map((paragraph) =>
             paragraph.startsWith("## ") ? (
               <h2 key={paragraph}>{paragraph.replace("## ", "")}</h2>
+            ) : paragraph.startsWith("### ") ? (
+              <h3 key={paragraph}>{paragraph.replace("### ", "")}</h3>
             ) : paragraph.startsWith("- ") ? (
               <ul key={paragraph}>
                 {paragraph.split("\n").map((item) => (
