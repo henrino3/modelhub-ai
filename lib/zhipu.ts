@@ -1,4 +1,4 @@
-const ZHIPU_ENDPOINT = "https://open.bigmodel.cn/api/paas/v4/chat/completions";
+const ZHIPU_ENDPOINT = "https://api.z.ai/api/coding/paas/v4/chat/completions";
 
 export async function sendZhipuChat({
   model,
